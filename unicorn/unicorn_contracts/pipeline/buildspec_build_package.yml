@@ -17,6 +17,10 @@ phases:
       - sam package --config-file pipeline/samconfig-pipeline.toml
         --config-env "${TESTING_ENV_CONFIG_NAME}"
         --output-template-file "packaged-testing.yaml"
+      - mkdir -p ../unicorn_contracts/pipeline
+      - mv packaged-testing.yaml ../unicorn_contracts/packaged-testing.yaml
+      - mv packaged-prod.yaml ../unicorn_contracts/packaged-prod.yaml
+      - cp -r pipeline/* ../unicorn_contracts/pipeline/
       - . pipeline/assume-role.sh "${PROD_PIPELINE_EXECUTION_ROLE}" prod-package
       - sam package --config-file pipeline/samconfig-pipeline.toml
         --config-env "${PROD_ENV_CONFIG_NAME}"
