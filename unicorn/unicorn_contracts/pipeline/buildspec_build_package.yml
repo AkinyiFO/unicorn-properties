@@ -21,13 +21,9 @@ phases:
       - sam validate --template template.yaml  # 👈 Validate template
       - echo "TESTING_ENV_CONFIG_NAME = ${TESTING_ENV_CONFIG_NAME}"
       - echo "=== Running sam package ==="
-      - sam package --config-file pipeline/samconfig-pipeline.toml
-        --config-env "${TESTING_ENV_CONFIG_NAME}"
-        --output-template-file "packaged-testing.yaml"
+      - sam package --config-file pipeline/samconfig-pipeline.toml --config-env "${TESTING_ENV_CONFIG_NAME}" --output-template-file "packaged-testing.yaml"
       - . pipeline/assume-role.sh "${PROD_PIPELINE_EXECUTION_ROLE}" prod-package
-      - sam package --config-file pipeline/samconfig-pipeline.toml
-        --config-env "${PROD_ENV_CONFIG_NAME}"
-        --output-template-file "packaged-prod.yaml"
+      - sam package --config-file pipeline/samconfig-pipeline.toml --config-env "${PROD_ENV_CONFIG_NAME}" --output-template-file "packaged-prod.yaml"
 artifacts:
   files:
     - unicorn_contracts/packaged-testing.yaml
