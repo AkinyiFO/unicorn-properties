@@ -2,13 +2,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.12
-    commands:
-      - cd "${PROJECT_SUBFOLDER}"
-      - pip install uv
-      - uv export --no-hashes --format=requirements.txt --output-file=src/requirements.txt --extra=dev
-      - uv run pip install -r src/requirements.txt
-      - uv sync
+      java: corretto17
   build:
     commands:
-      - uv run pytest tests/unit/
+      - cd "${PROJECT_SUBFOLDER}"
+      # trigger the unit tests here
+      - echo 'Running unit tests'
+      - cd ContractsFunction
+      - mvn test
