@@ -28,19 +28,9 @@ Parameters:
   ProjectSubfolder:
     Type: String
     Default: "unicorn/unicorn_contracts"
-  GitHubOwner:
-    Type: String
-    Default: "AkinyiFO"
-  GitHubRepo:
+  CodeCommitRepositoryName:
     Type: String
     Default: "unicorn-properties"
-  GitHubBranch:
-    Type: String
-    Default: "main"
-  GitHubOAuthToken:
-    Type: String
-    NoEcho: true
-    Description: "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"
   MainGitBranch:
     Type: String
     Default: "main"
@@ -89,17 +79,15 @@ Resources:
       Stages:
         - Name: Source
           Actions:
-            - Name: GitHubSource
+            - Name: SourceCodeRepo
               ActionTypeId:
-                Category: Source
-                Owner: ThirdParty
-                Provider: GitHub
                 Version: "1"
+                Category: Source
+                Owner: AWS
+                Provider: CodeCommit
               Configuration:
-                Owner: !Ref GitHubOwner
-                Repo: !Ref GitHubRepo
-                Branch: !Ref GitHubBranch
-                OAuthToken: !Ref GitHubOAuthToken
+                BranchName: !Ref MainGitBranch
+                RepositoryName: !Ref CodeCommitRepositoryName
                 PollForSourceChanges: false
               OutputArtifacts:
                 - Name: SourceCodeAsZip
