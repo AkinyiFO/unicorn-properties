@@ -38,8 +38,7 @@ phases:
       - cp -r ../pipeline ../../
 
 artifacts:
-  base-directory: '.Environment'
   files:
-    - 'packaged-testing.yaml'
-    - 'packaged-prod.yaml'
-    - 'pipeline/*'
+    - packaged-testing.yaml
+    - packaged-prod.yaml
+    - pipeline/*
