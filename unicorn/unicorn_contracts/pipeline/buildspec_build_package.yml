@@ -14,6 +14,13 @@ phases:
       - cd "${PROJECT_SUBFOLDER}"
       - sam build --template "template.yaml"
       - . pipeline/assume-role.sh "${TESTING_PIPELINE_EXECUTION_ROLE}" test-package
+      - echo "=== DEBUG: Before sam package ==="
+      - pwd
+      - ls -la
+      - aws sts get-caller-identity  # 👈 Verify you have credentials
+      - sam validate --template template.yaml  # 👈 Validate template
+      - echo "TESTING_ENV_CONFIG_NAME = ${TESTING_ENV_CONFIG_NAME}"
+      - echo "=== Running sam package ==="
       - sam package --config-file pipeline/samconfig-pipeline.toml
         --config-env "${TESTING_ENV_CONFIG_NAME}"
         --output-template-file "packaged-testing.yaml"
@@ -22,7 +29,6 @@ phases:
         --config-env "${PROD_ENV_CONFIG_NAME}"
         --output-template-file "packaged-prod.yaml"
 artifacts:
-  base-directory: unicorn_contracts
   files:
     - unicorn_contracts/packaged-testing.yaml
     - unicorn_contracts/packaged-prod.yaml
