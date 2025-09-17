@@ -1,0 +1,12 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+  build:
+    commands:
+      - cd "${PROJECT_SUBFOLDER}"
+      # trigger the unit tests here
+      - echo 'Running unit tests'
+      - cd ContractsFunction
+      - mvn test
