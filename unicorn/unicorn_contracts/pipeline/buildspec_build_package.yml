@@ -23,6 +23,6 @@ phases:
         --output-template-file "packaged-prod.yaml"
 artifacts:
   files:
-    - unicorn_contracts/packaged-testing.yaml
-    - unicorn_contracts/packaged-prod.yaml
-    - unicorn_contracts/pipeline/*
+    - unicorn/unicorn_contracts/packaged-testing.yaml
+    - unicorn/unicorn_contracts/packaged-prod.yaml
+    - unicorn/unicorn_contracts/pipeline/*
