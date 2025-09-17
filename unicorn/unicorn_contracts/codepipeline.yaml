@@ -518,12 +518,12 @@ Resources:
         Type: CODEPIPELINE
         BuildSpec: !Sub "${ProjectSubfolder}/pipeline/buildspec_deploy.yml"
 
-  #    _____                      __________
-  #   /     \   ____   ____   ____\______   \ ____ ______   ____
-  #  /  \ /  \ /  _ \ /    \ /  _ \|       _// __ \\____ \ /  _ \
+  #    _____                      __________                      
+  #   /     \   ____   ____   ____\______   \ ____ ______   ____  
+  #  /  \ /  \ /  _ \ /    \ /  _ \|       _// __ \\____ \ /  _ \ 
   # /    Y    (  <_> )   |  (  <_> )    |   \  ___/|  |_> >  <_> )
-  # \____|__  /\____/|___|  /\____/|____|_  /\___  >   __/ \____/
-  #         \/            \/              \/     \/|__|
+  # \____|__  /\____/|___|  /\____/|____|_  /\___  >   __/ \____/ 
+  #         \/            \/              \/     \/|__|           
   MonorepoTriggerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -603,7 +603,7 @@ Resources:
           PIPELINE_NAME: !Ref Pipeline
           APP_DIR_IN_MONOREPO: !Ref ProjectSubfolder
       Policies:
-        - CodeCommitReadPolicy:
+        - CodeCommitReadPolicy: 
             RepositoryName: !Ref CodeCommitRepositoryName
         - SSMParameterReadPolicy:
             ParameterName: !Sub "${MonorepoSsmPrefix}/*"
