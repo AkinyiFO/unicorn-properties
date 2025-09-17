@@ -28,6 +28,7 @@ Parameters:
   ProjectSubfolder:
     Type: String
     Default: "unicorn/unicorn_contracts"
+#    Changed to GitHub in the console, but leaving CodeCommit as default here
   CodeCommitRepositoryName:
     Type: String
     Default: "unicorn-properties"
