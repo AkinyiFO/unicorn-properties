@@ -1,36 +1,36 @@
 version = 0.1
 
-[1]
-[1.global]
-[1.global.parameters]
+[testing]
+[testing.global]
+[testing.global.parameters]
 stack_name = "uni-prop-dev-contracts"
 s3_prefix = "uni-prop-dev-contracts"
 s3_bucket = "aws-sam-cli-managed-dev-pipeline-r-artifactsbucket-b4bde9ggoit3"
 region = "us-east-1"
 
-[1.deploy]
-[1.deploy.parameters]
+[testing.deploy]
+[testing.deploy.parameters]
 template = "packaged-testing.yaml"
 fail_on_empty_changeset = false
 capabilities = "CAPABILITY_IAM"
- parameter_overrides = "Stage=dev"
+parameter_overrides = "Stage=dev"
 
 # ############################################## #
 
-[2]
-[2.global]
-[2.global.parameters]
+[prod]
+[prod.global]
+[prod.global.parameters]
 stack_name = "uni-prop-prod-contracts"
 s3_prefix = "uni-prop-prod-contracts"
 s3_bucket = "aws-sam-cli-managed-prod-pipeline--artifactsbucket-u7y7j1f2fmwv"
 region = "us-east-1"
 
-[2.deploy]
-[2.deploy.parameters]
+[prod.deploy]
+[prod.deploy.parameters]
 template = "packaged-prod.yaml"
 fail_on_empty_changeset = false
 capabilities = "CAPABILITY_IAM"
- parameter_overrides = "Stage=\"prod\""
+parameter_overrides = "Stage=\"prod\""
 
 # ############################################## #
 
