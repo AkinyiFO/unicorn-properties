@@ -19,12 +19,12 @@ phases:
       - sam build --template template.yaml
 
       # Assume role and package for testing
-      - . ../pipeline/assume-role.sh "${TESTING_PIPELINE_EXECUTION_ROLE}" test-package
-      - sam package --config-file ../pipeline/samconfig-pipeline.toml --config-env "${TESTING_ENV_CONFIG_NAME}" --output-template-file packaged-testing.yaml
+      - /pipeline/assume-role.sh "${TESTING_PIPELINE_EXECUTION_ROLE}" test-package
+      - sam package --config-file /pipeline/samconfig-pipeline.toml --config-env "${TESTING_ENV_CONFIG_NAME}" --output-template-file packaged-testing.yaml
 
       # Assume role and package for prod
-      - . ../pipeline/assume-role.sh "${PROD_PIPELINE_EXECUTION_ROLE}" prod-package
-      - sam package --config-file ../pipeline/samconfig-pipeline.toml --config-env "${PROD_ENV_CONFIG_NAME}" --output-template-file packaged-prod.yaml
+      - /pipeline/assume-role.sh "${PROD_PIPELINE_EXECUTION_ROLE}" prod-package
+      - sam package --config-file /pipeline/samconfig-pipeline.toml --config-env "${PROD_ENV_CONFIG_NAME}" --output-template-file packaged-prod.yaml
 
       # DEBUG: Show files
       - pwd
@@ -35,10 +35,11 @@ phases:
       # Copy artifacts to repo root for easy collection
       - cp packaged-testing.yaml ../../
       - cp packaged-prod.yaml ../../
-      - cp -r ../pipeline ../../
+      - cp -r /pipeline ../../
 
 artifacts:
+  base-directory: 'ENVIRONMENT'
   files:
-    - packaged-testing.yaml
-    - packaged-prod.yaml
-    - pipeline/*
+    - 'packaged-testing.yaml'
+    - 'packaged-prod.yaml'
+    - 'pipeline/*'
