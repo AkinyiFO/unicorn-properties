@@ -1,0 +1,120 @@
+Comment: >-
+  The property approval workflow ensures that its images and content is safe to
+  publish and that there is an approved contract in place before the listing is
+  made available to the public through the Unicorn Properties website.
+QueryLanguage: JSONata
+StartAt: LookupContract
+States:
+  LookupContract:
+    Type: Task
+    Resource: arn:aws:states:::dynamodb:getItem
+    Arguments:
+      TableName: ${TableName}
+      Key:
+        property_id:
+          S: '{% $states.input.detail.property_id %}'
+      ProjectionExpression: contract_id, property_id, contract_status
+    Next: VerifyContractExists
+    Catch:
+      - ErrorEquals:
+          - States.ALL
+        Next: NotFound
+  VerifyContractExists:
+    Type: Choice
+    Choices:
+      - Next: Parallel
+        Comment: Contract Exists
+        Condition: '{% $exists($states.input.Item) %}'
+    Default: NotFound
+  Parallel:
+    Type: Parallel
+    Next: IsContentSafe
+    Branches:
+      - StartAt: CheckDescriptionSentiment
+        States:
+          CheckDescriptionSentiment:
+            Type: Task
+            Arguments:
+              LanguageCode: en
+              Text: '{% $states.context.Execution.Input.detail.description %}'
+            Resource: arn:aws:states:::aws-sdk:comprehend:detectSentiment
+            End: true
+      - StartAt: Map
+        States:
+          Map:
+            Type: Map
+            ItemProcessor:
+              ProcessorConfig:
+                Mode: INLINE
+              StartAt: CheckForUnsafeContentInImages
+              States:
+                CheckForUnsafeContentInImages:
+                  Type: Task
+                  Arguments:
+                    Image:
+                      S3Object:
+                        Bucket: uni-prop-local-images-630633396797
+                        Name: '{% $states.input %}'
+                  Resource: arn:aws:states:::aws-sdk:rekognition:detectModerationLabels
+                  End: true
+            End: true
+            Items: '{% $states.context.Execution.Input.detail.images %}'
+  IsContentSafe:
+    Type: Choice
+    Choices:
+      - Next: WaitForContractApproval
+        Comment: ContentModerationPassed
+        Condition: >-
+          {% $states.input[0].Sentiment = 'POSITIVE' and
+          $not($exists($states.input[1].ModerationLabels.*)) %}
+    Default: PublishPropertyPublicationRejected
+  PublishPropertyPublicationRejected:
+    Type: Task
+    Resource: arn:aws:states:::events:putEvents
+    Arguments:
+      Entries:
+        - EventBusName: UnicornPropertiesBus-local
+          Source: unicorn.properties
+          DetailType: PublicationEvaluationCompleted
+          Detail:
+            property_id: '{% $states.context.Execution.Input.detail.property_id %}'
+            evaluation_result: APPROVED
+    Next: Rejected
+  WaitForContractApproval:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke.waitForTaskToken
+    Output: '{% $states.result.Payload %}'
+    Arguments:
+      FunctionName: ${WaitForContractApproval}
+      Payload:
+        Input: '{% $states.context.Execution.Input.detail %}'
+        TaskToken: '{% $states.context.Task.Token %}'
+    Retry:
+      - ErrorEquals:
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
+          - Lambda.TooManyRequestsException
+        IntervalSeconds: 1
+        MaxAttempts: 3
+        BackoffRate: 2
+        JitterStrategy: FULL
+    Next: PublishPropertyPublicationApproved
+  PublishPropertyPublicationApproved:
+    Type: Task
+    Resource: arn:aws:states:::events:putEvents
+    Arguments:
+      Entries:
+        - EventBusName: UnicornPropertiesBus-local
+          Source: unicorn.properties
+          DetailType: PublicationEvaluationCompleted
+          Detail:
+            property_id: '{% $states.context.Execution.Input.detail.property_id %}'
+            evaluation_result: APPROVED
+    Next: Approved
+  Rejected:
+    Type: Succeed
+  NotFound:
+    Type: Fail
+  Approved:
+    Type: Succeed
