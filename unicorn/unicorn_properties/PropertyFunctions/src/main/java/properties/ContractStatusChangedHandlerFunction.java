@@ -11,6 +11,13 @@ import java.util.Map;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import software.amazon.cloudwatchlogs.emf.logger.MetricsLogger;
+import software.amazon.lambda.powertools.logging.CorrelationIdPathConstants;
+import software.amazon.lambda.powertools.logging.Logging;
+import software.amazon.lambda.powertools.metrics.Metrics;
+import software.amazon.lambda.powertools.metrics.MetricsUtils;
+import software.amazon.lambda.powertools.tracing.Tracing;
+import software.amazon.lambda.powertools.tracing.TracingUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +35,7 @@ import schema.unicorn_contracts.contractstatuschanged.marshaller.Marshaller;
 public class ContractStatusChangedHandlerFunction {
 
     private static final Logger LOGGER = LogManager.getLogger(ContractStatusChangedHandlerFunction.class);
+    MetricsLogger metricsLogger = MetricsUtils.metricsLogger();
 
     final String TABLE_NAME = System.getenv("CONTRACT_STATUS_TABLE");
 
@@ -39,6 +47,7 @@ public class ContractStatusChangedHandlerFunction {
     // ADDED: Step Functions client to resume workflow
     SfnClient sfnClient = SfnClient.builder().build();
 
+    @Tracing
     public void handleRequest(InputStream inputStream, OutputStream outputStream,
                               Context context) throws IOException {
 
@@ -59,7 +68,7 @@ public class ContractStatusChangedHandlerFunction {
         writer.close();
     }
 
-    // MODIFIED: Renamed and added workflow resume logic
+    @Tracing
     void saveContractStatusAndResumeWorkflow(String propertyId,
                                              String contractStatus, String contractId, Long contractLastModifiedOn) {
         Map<String, AttributeValue> key = new HashMap<>();
