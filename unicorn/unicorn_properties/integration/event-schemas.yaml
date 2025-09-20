@@ -45,14 +45,42 @@ Resources:
               - Fn::GetAtt: EventRegistry.RegistryArn
               - Fn::Sub: "arn:${AWS::Partition}:schemas:${AWS::Region}:${AWS::AccountId}:schema/${EventRegistry.RegistryName}*"
 
-  # PublicationEvaluationCompleted:
-  #   Type: AWS::EventSchemas::Schema
-  #   Properties:
-  #     Type: 'OpenApi3'
-  #     RegistryName:
-  #       Fn::GetAtt: EventRegistry.RegistryName
-  #     SchemaName:
-  #       Fn::Sub: '{{resolve:ssm:/uni-prop/UnicornPropertiesNamespace}}@PublicationEvaluationCompleted'
-  #     Description: 'The schema for when a property evaluation is completed'
-  #     Content:
-  #       Fn::Sub: |
+  PublicationEvaluationCompleted:
+     Type: AWS::EventSchemas::Schema
+     Properties:
+       Type: 'OpenApi3'
+       RegistryName:
+         Fn::GetAtt: EventRegistry.RegistryName
+       SchemaName:
+         Fn::Sub: '{{resolve:ssm:/uni-prop/UnicornPropertiesNamespace}}@PublicationEvaluationCompleted'
+       Description: 'The schema for when a property evaluation is completed'
+       Content:
+         Fn::Sub: |
+           {
+                   "openapi": "3.0.0",
+                   "info": {
+                     "version": "1.0.0",
+                     "title": "PublicationEvaluationCompleted"
+                   },
+                   "paths": {},
+                   "components": {
+                     "schemas": {
+                       "PublicationEvaluationCompleted": {
+                         "type": "object",
+                         "properties": {
+                           "property_id": {
+                             "type": "string",
+                             "description": "Unique identifier for the property (e.g., country/city/street/number)"
+                           },
+                           "evaluation_result": {
+                             "type": "string",
+                             "description": "Result of the evaluation (e.g., APPROVED, REJECTED)",
+                             "enum": ["APPROVED", "REJECTED"]
+                           }
+                         },
+                         "required": ["property_id", "evaluation_result"],
+                         "additionalProperties": false
+                       }
+                     }
+                   }
+                 }
