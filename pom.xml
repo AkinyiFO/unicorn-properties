@@ -8,9 +8,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>unicorn_contracts/ContractsFunction</module>
-        <module>unicorn_properties/PropertyFunctions</module>
-        <module>unicorn_web/PropertyFunctions</module>
+        <module>unicorn/unicorn_contracts/ContractsFunction</module>
+        <module>unicorn/unicorn_properties/PropertyFunctions</module>
+        <module>unicorn/unicorn_web/PropertyFunctions</module>
     </modules>
 
 </project>
+
