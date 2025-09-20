@@ -3,14 +3,14 @@ I did this cool stuff with serverless from [AWS Serverless Developer Experience]
 **The Monorepo Trigger Stack Used**
 
 I replaced AWS CodeCommit with Github after [AWS closed new customer access to AWS CodeCommit, effective July 25, 2024](https://aws.amazon.com/blogs/devops/how-to-migrate-your-aws-codecommit-repository-to-another-git-provider/)
-![Alt text of the image](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/monorepo-trigger-stack.png)
+![monorepo-trigger-stack.png](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/monorepo-trigger-stack.png)
 **The Full Architecture Used**
-![Alt text of the image](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture.png)
+![architecture.png](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture.png)
 **The Contracts Architecture Used**
-![Alt text of the image](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture-contracts.png)
+![architecture-contracts.png](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture-contracts.png)
 **The Contracts API-SQS Intergration Architecture Used**
-![Alt text of the image](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/contracts/api-sqs-integration.png)
+![api-sqs-integration.png](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/contracts/api-sqs-integration.png)
 **The Properties Architecture Used**
-![Alt text of the image](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture-properties.png)
+![architecture-properties.png](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture-properties.png)
 **The Web Architecture Used**
-![Alt text of the image](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture-properties-web.png)
+![architecture-properties-web.png](https://static.us-east-1.prod.workshops.aws/public/53880fb1-61c1-4bc1-80ee-122b0a94032f/static/images/architecture-properties-web.png)
