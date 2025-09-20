@@ -34,20 +34,14 @@ jobs:
         mvn clean install
         mvn test
 
-    - name: Build SAM Application
+    - name: Build and Deploy SAM Application
       run: |
         cd unicorn/unicorn_contracts/
         sam build
-        cd unicorn/unicorn_properties/
-        sam build
-        cd unicorn/unicorn_web/
-        sam build
-
-    - name: Deploy SAM Application
-      run: |
-        cd unicorn/unicorn_contracts/
         sam deploy
         cd unicorn/unicorn_properties/
+        sam build
         sam deploy
         cd unicorn/unicorn_web/
+        sam build
         sam deploy
