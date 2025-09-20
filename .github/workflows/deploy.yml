@@ -36,11 +36,11 @@ jobs:
 
     - name: Build SAM Application
       run: |
-        cd unicorn/unicorn_contracts/template.yaml
+        cd unicorn/unicorn_contracts/
         sam build
-        cd unicorn/unicorn_properties/template.yaml
+        cd unicorn/unicorn_properties/
         sam build
-        cd unicorn/unicorn_web/template.yaml
+        cd unicorn/unicorn_web/
         sam build
 
     - name: Deploy SAM Application
