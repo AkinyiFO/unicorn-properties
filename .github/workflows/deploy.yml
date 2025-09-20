@@ -38,10 +38,12 @@ jobs:
       run: |
         cd unicorn/unicorn_contracts/
         sam build
-        sam deploy -y
+        sam deploy --no-confirm-changeset
+        
         cd unicorn/unicorn_properties/
         sam build
-        sam deploy -y
+        sam deploy --no-confirm-changeset
+        
         cd unicorn/unicorn_web/
         sam build
-        sam deploy -y
+        sam deploy --no-confirm-changeset
