@@ -38,10 +38,10 @@ jobs:
       run: |
         cd unicorn/unicorn_contracts/
         sam build
-        sam deploy
+        sam deploy -y
         cd unicorn/unicorn_properties/
         sam build
-        sam deploy
+        sam deploy -y
         cd unicorn/unicorn_web/
         sam build
-        sam deploy
+        sam deploy -y
