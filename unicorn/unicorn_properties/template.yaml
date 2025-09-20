@@ -81,6 +81,12 @@ Globals:
 # RESOURCES
 ######################################
 Resources:
+  SubscriptionsStack:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: integration/subscriptions.yaml
+      Parameters:
+        Stage: !Ref Stage
   ######################################
   # LAMBDA FUNCTIONS
   ######################################
