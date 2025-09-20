@@ -31,9 +31,8 @@ jobs:
 
     - name: Run Tests
       run: |
-        echo "Running tests..."
-        npm install
-        npm test
+        mvn clean install
+        mvn test
 
     - name: Build SAM Application
       run: |
