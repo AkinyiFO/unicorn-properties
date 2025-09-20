@@ -1,0 +1,10 @@
+property\requestapproval\RequestApproval.class
+schema\unicorn_properties\publicationevaluationcompleted\AWSEvent.class
+property\dao\Property.class
+property\search\PropertySearchFunction.class
+schema\unicorn_properties\publicationevaluationcompleted\marshaller\Marshaller.class
+property\requestapproval\PublicationApprovedFunction.class
+schema\unicorn_properties\publicationevaluationcompleted\PublicationEvaluationCompleted.class
+property\requestapproval\RequestApprovalFunction.class
+property\populate\PopulateDataFunction.class
+property\requestapproval\Address.class
