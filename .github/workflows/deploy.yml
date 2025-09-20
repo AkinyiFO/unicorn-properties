@@ -37,16 +37,18 @@ jobs:
 
     - name: Build SAM Application
       run: |
+        cd unicorn/unicorn_contracts/template.yaml
+        sam build
+        cd unicorn/unicorn_properties/template.yaml
+        sam build
+        cd unicorn/unicorn_web/template.yaml
         sam build
 
     - name: Deploy SAM Application
       run: |
-        sam deploy \
-          --stack-name my-app-stack \
-          --s3-bucket my-sam-deployments-bucket \
-          --capabilities CAPABILITY_IAM \
-          --parameter-overrides \
-            Environment=prod \
-            AppName=my-app \
-          --no-confirm-changeset \
-          --no-fail-on-empty-changeset
+        cd unicorn/unicorn_contracts/template.yaml
+        sam deploy
+        cd unicorn/unicorn_properties/template.yaml
+        sam deploy
+        cd unicorn/unicorn_web/template.yaml
+        sam deploy
